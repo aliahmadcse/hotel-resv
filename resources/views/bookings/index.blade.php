@@ -32,7 +32,7 @@
                 <td>{{ date('F d, Y', strtotime($booking->start)) }}</td>
                 <td>{{ date('F d, Y', strtotime($booking->end)) }}</td>
                 <td>{{ $booking->is_reservation ? 'Yes' : 'No' }}</td>
-                <td>{{ $booking->is_paid ? 'Yes' : 'No' }}</td>
+                <td>{{ $booking->is_paid===1 ? 'Yes' : 'No' }}</td>
                 <td>{{ (strtotime($booking->start) < time()) ? 'Yes' : 'No' }}</td>
                 <td>{{ (strtotime($booking->end) < time()) ? 'Yes' : 'No' }}</td>
                 <td>{{ date('F d, Y', strtotime($booking->created_at)) }}</td>
