@@ -67,7 +67,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        dd($booking);
+        return view('bookings.show')->with('booking',$booking);
     }
 
     /**
