@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,8 @@ class ShowRoomsController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $rooms=DB::table('rooms')->get();
+        // $rooms=DB::table('rooms')->get();
+        $rooms=Room::all();
         if ($request->query('id')!==null){
             $rooms=$rooms->where('room_type_id',$request->query('id'));
         }
