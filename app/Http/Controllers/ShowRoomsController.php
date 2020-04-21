@@ -15,12 +15,13 @@ class ShowRoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request,$roomType=null)
     {
-        // $rooms=DB::table('rooms')->get();
-        $rooms=Room::all();
-        if ($request->query('id')!==null){
-            $rooms=$rooms->where('room_type_id',$request->query('id'));
+        if (isset($roomType)){
+            $rooms=Room::where('room_type_id','!=',$roomType)->get();
+        }
+        else{
+            $rooms=Room::get();
         }
         return view('rooms.index',['rooms' => $rooms]);
     }
