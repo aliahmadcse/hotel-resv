@@ -7,13 +7,15 @@
             <tr>
                 <th>Room Number</th>
                 <th>Type</th>
+                <th>Detail</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($rooms as $room)
                 <tr>
                     <td>{{$room->number}}</td>
-                    <td>{{$room->room_type_id}}</td>
+                    <td>{{$room->roomType->name}}</td>
+                    <td>{{$room->roomType->description}}</td>
                 </tr>
             @endforeach
         </tbody>
