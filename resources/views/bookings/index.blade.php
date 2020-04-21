@@ -21,7 +21,9 @@
             <th>Started?</th>
             <th>Passed?</th>
             <th>Created</th>
-            <th class="Actions">Actions</th>
+            <th class="Actions">Action</th>
+            <th class="Actions">Action</th>
+            <th class="Actions">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -43,16 +45,20 @@
                         title="View">
                       View
                     </a>
+                </td>
+                <td>
                     <a
                         href="{{ action('BookingController@edit', ['booking' => $booking->id]) }}"
                         alt="Edit"
                         title="Edit">
                       Edit
                     </a>
+                </td>
+                <td>
                     <form action="{{ action('BookingController@destroy', ['booking' => $booking->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="btn btn-link" title="Delete" value="Delete">
+                    <button type="submit" class="btn btn-danger" title="Delete" value="Delete">
                         Delete
                     </button>
                     </form>
