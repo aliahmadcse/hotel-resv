@@ -43,17 +43,9 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $id=DB::table('bookings')->insertGetId([
-            'room_id'=>$request->input('room_id'),
-            'start'=>$request->input('start'),
-            'end'=>$request->input('end'),
-            'is_reservation'=>$request->input('is_reservation',false),
-            'is_paid'=>$request->input('is_paid',false),
-            'notes'=>$request->input('notes'),
-        ]);
-
+        $booking=Booking::create($request->input());
         DB::table('bookings_users')->insert([
-            'booking_id'=>$id,
+            'booking_id'=>$booking->id,
             'user_id'=>$request->input('user_id')
         ]);
 
@@ -100,16 +92,8 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        DB::table('bookings')
-        ->where('id',$booking->id)
-        ->update([
-            'room_id'=>$request->input('room_id'),
-            'start'=>$request->input('start'),
-            'end'=>$request->input('end'),
-            'is_reservation'=>$request->input('is_reservation',false),
-            'is_paid'=>$request->input('is_paid',false),
-            'notes'=>$request->input('notes'),
-        ]);
+        $booking->fill($request->input());
+        $booking->save();
 
         DB::table('bookings_users')
         ->where('booking_id',$booking->id)
@@ -131,9 +115,7 @@ class BookingController extends Controller
         DB::table('bookings_users')
             ->where('booking_id',$booking->id)
             ->delete();
-        DB::table('bookings')
-            ->where('id',$booking->id)
-            ->delete();
+        $booking->delete();
         return redirect()->action('BookingController@index');
     }
 }
