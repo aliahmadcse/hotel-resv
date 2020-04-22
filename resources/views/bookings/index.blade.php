@@ -9,12 +9,13 @@
 
 
 @section('content')
-<table class="table">
+<table class="table table-striped table-responsive">
     <thead>
         <tr>
             <th>ID</th>
             <th>Room Number</th>
             <th>Room Type</th>
+            <th>User</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Reservation?</th>
@@ -33,6 +34,7 @@
                 <td>{{ $booking->id }}</td>
                 <td>{{ $booking->room->number }}</td>
                 <td>{{ $booking->room->roomType->name }}</td>
+                <td>{{ $booking->users[0]->name}}</td>
                 <td>{{ date('F d, Y', strtotime($booking->start)) }}</td>
                 <td>{{ date('F d, Y', strtotime($booking->end)) }}</td>
                 <td>{{ $booking->is_reservation ? 'Yes' : 'No' }}</td>

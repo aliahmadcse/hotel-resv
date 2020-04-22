@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\DB;
 class BookingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource using eager loading
+     * relationship.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $bookings=Booking::paginate(2);
+        $bookings=Booking::with(['room','room.roomType','users:name'])
+        ->paginate(2);
         return view('bookings.index')->with('bookings',$bookings);
     }
 
