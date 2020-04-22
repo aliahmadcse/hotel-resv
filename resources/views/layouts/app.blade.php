@@ -154,6 +154,12 @@
               @endif
           @else
               <li class="nav-item">
+                <a href="{{ url('rooms') }}" class="nav-link">Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('bookings.index') }}" class="nav-link">Bookings</a>
+              </li>
+              <li class="nav-item">
                   <a class="nav-link" href="{{ route('logout') }}"
                       onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
@@ -164,6 +170,7 @@
                       @csrf
                   </form>
               </li>
+              
           @endguest
         @endif
       </ul>
