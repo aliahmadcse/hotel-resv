@@ -17,4 +17,5 @@ class RoomType extends Model
         return $this->hasMany('App\Room','id','room_type_id');
     }
 
+    
 }

@@ -13,7 +13,8 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Room</th>
+            <th>Room Number</th>
+            <th>Room Type</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Reservation?</th>
@@ -30,7 +31,8 @@
         @forelse ($bookings as $booking)
             <tr>
                 <td>{{ $booking->id }}</td>
-                <td>{{ $booking->room_id }}</td>
+                <td>{{ $booking->room->number }}</td>
+                <td>{{ $booking->room->roomType->name }}</td>
                 <td>{{ date('F d, Y', strtotime($booking->start)) }}</td>
                 <td>{{ date('F d, Y', strtotime($booking->end)) }}</td>
                 <td>{{ $booking->is_reservation ? 'Yes' : 'No' }}</td>
