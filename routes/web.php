@@ -18,11 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home','BookingController@index');
+Route::get('/home', 'BookingController@index');
 
-Route::get('/test' , function(){return "Good Bye";});
+Route::get('/test', function () {
+    return "Good Bye";
+});
 
-Route::get('/rooms/{roomNumber?}','ShowRoomsController');
+Route::get('/rooms/{roomNumber?}', 'ShowRoomsController');
 
 // Route::get('/bookings','BookingController@index');
 // Route::get('/bookings/create','BookingController@create');
@@ -32,4 +34,6 @@ Route::get('/rooms/{roomNumber?}','ShowRoomsController');
 // Route::put('/bookings/{booking}','BookingController@update');
 // Route::delete('/booking/{booking}','BookingController@destroy');
 
-Route::resource('bookings','BookingController');
+Route::resource('bookings', 'BookingController');
+
+Route::resource('room_types', 'RoomTypeController');
