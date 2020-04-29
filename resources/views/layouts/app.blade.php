@@ -154,7 +154,10 @@
               @endif
           @else
               <li class="nav-item">
-                <a href="{{ url('rooms') }}" class="nav-link">Rooms</a>
+                <a href="{{ route('rooms.index') }}" class="nav-link">Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('room_types.index') }}" class="nav-link">Room Types</a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('bookings.index') }}" class="nav-link">Bookings</a>

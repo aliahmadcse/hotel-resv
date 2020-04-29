@@ -24,7 +24,8 @@ Route::get('/test', function () {
     return "Good Bye";
 });
 
-Route::get('/rooms/{roomNumber?}', 'ShowRoomsController');
+Route::get('/rooms/{roomNumber?}', 'ShowRoomsController')
+    ->name('rooms.index');
 
 // Route::get('/bookings','BookingController@index');
 // Route::get('/bookings/create','BookingController@create');
