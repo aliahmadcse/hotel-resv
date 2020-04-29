@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Room;
+use App\User;
 use App\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +19,7 @@ class BookingController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource using eager loading
      * relationship.
@@ -26,9 +28,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings=Booking::with(['room','room.roomType','users:name'])
-        ->paginate(2);
-        return view('bookings.index')->with('bookings',$bookings);
+        $bookings = Booking::with(['room', 'room.roomType', 'users:name'])
+            ->paginate(2);
+        return view('bookings.index')->with('bookings', $bookings);
     }
 
     /**
@@ -38,13 +40,13 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $users=DB::table('users')->get()->pluck('name','id')
-                ->prepend('none');
-        $rooms=DB::table('rooms')->get()->pluck('number','id');
+        $users = User::get()->pluck('name', 'id')
+            ->prepend('none');
+        $rooms = Room::get()->pluck('number', 'id');
         return view('bookings.create')
-                ->with('users',$users)
-                ->with('booking',( new Booking() ))
-                ->with('rooms',$rooms);
+            ->with('users', $users)
+            // ->with('booking', (new Booking()))
+            ->with('rooms', $rooms);
     }
 
     /**
@@ -55,7 +57,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $booking=Booking::create($request->input());
+        $booking = Booking::create($request->input());
         $booking->users()->attach($request->input('user_id'));
 
         return redirect()->action('BookingController@index');
@@ -69,7 +71,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('bookings.show')->with('booking',$booking);
+        return view('bookings.show')->with('booking', $booking);
     }
 
     /**
@@ -80,18 +82,21 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        $users=DB::table('users')->get()->pluck('name','id')
-                ->prepend('none');
-        $rooms=DB::table('rooms')->get()->pluck('number','id');
-        $bookingsUser=DB::table('bookings_users')->where('booking_id',
-                    $booking->id)->first();
+        $users = User::get()->pluck('name', 'id')
+            ->prepend('none');
+        $rooms = Room::get()->pluck('number', 'id');
+        $bookingsUser = DB::table('bookings_users')
+            ->where('booking_id', $booking->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
         return view('bookings.edit')
-                ->with('users',$users)
-                ->with('bookingsUser',$bookingsUser)
-                ->with('rooms',$rooms)
-                ->with('booking',$booking);
+            ->with('users', $users)
+            ->with('bookingsUser', $bookingsUser)
+            ->with('rooms', $rooms)
+            ->with('booking', $booking);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -101,7 +106,15 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        $booking->fill($request->input());
+        // dd($request->input());
+        $booking->fill([
+            'room_id' => $request->input('room_id'),
+            'user_id' => $request->input('user_id'),
+            'start' => $request->input('start'),
+            'end' => $request->input('end'),
+            'is_paid' => $request->input('is_paid') ?? 0,
+            'notes' => $request->input('notes')
+        ]);
         $booking->save();
         $booking->users()->sync([$request->input('user_id')]);
 
