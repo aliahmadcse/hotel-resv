@@ -8,10 +8,14 @@ class EmailReservationCommand extends Command
 {
     /**
      * The name and signature of the console command.
-     *
+     * I have defined a command with a required argument of count
+     * and an option (which is obviously optional) but it require
+     * an input to be passed
      * @var string
      */
-    protected $signature = 'reservations:notify';
+    protected $signature = 'reservations:notify 
+    {count : The number of bookings to retrieve} 
+    {--dry-run= : To have this command do no actual work}';
 
     /**
      * The console command description.
@@ -37,7 +41,13 @@ class EmailReservationCommand extends Command
      */
     public function handle()
     {
+        $count = $this->argument('count');
+        if (!is_numeric($count)) {
+            $this->alert('The count must be a number');
+            return 1;
+        }
         $bookings = \App\Booking::with(['room.roomType', 'users'])
+            ->limit($count)
             ->get();
 
         $this->info(
@@ -46,10 +56,16 @@ class EmailReservationCommand extends Command
                 $bookings->count()
             )
         );
+        // implementing a bar in artisan console
         $bar = $this->output->createProgressBar($bookings->count());
         $bar->start();
         foreach ($bookings as $booking) {
-            $this->error("Nothing");
+            // checking for the passed option
+            if ($this->option('dry-run')) {
+                $this->info('Would process booking');
+            } else {
+                $this->error("Nothing");
+            }
             $bar->advance();
         }
         $bar->finish();
