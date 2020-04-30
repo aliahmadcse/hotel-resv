@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\VarDumper\VarDumper;
 
 class EmailReservationCommand extends Command
 {
@@ -41,6 +42,17 @@ class EmailReservationCommand extends Command
      */
     public function handle()
     {
+        // asking for user input
+
+        // $this->ask(); //can be used to ask for input 
+        // $this->anticipate('',['sms','mail']) //used for anticipation
+        $answer = $this->choice(
+            'Which service would you like',
+            ['sms', 'mail'],
+            'mail'
+        );
+        var_dump($answer);
+        // geting the argument value
         $count = $this->argument('count');
         if (!is_numeric($count)) {
             $this->alert('The count must be a number');
