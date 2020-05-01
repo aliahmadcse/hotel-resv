@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\VarDumper\VarDumper;
+use Facades\App\Libraries\Notifications;
 
 class EmailReservationCommand extends Command
 {
@@ -30,8 +30,9 @@ class EmailReservationCommand extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Libraries\Notifications $notify)
     {
+        $this->notify = $notify;
         parent::__construct();
     }
 
@@ -76,7 +77,8 @@ class EmailReservationCommand extends Command
             if ($this->option('dry-run')) {
                 $this->info('Would process booking');
             } else {
-                $this->error("Nothing");
+                // $this->error("Nothing");
+                $this->notify->send();
             }
             $bar->advance();
         }
