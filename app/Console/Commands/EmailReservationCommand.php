@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Facades\App\Libraries\Notifications;
+use App\Libraries\NotificationsInterface;
 
 class EmailReservationCommand extends Command
 {
@@ -30,7 +30,7 @@ class EmailReservationCommand extends Command
      *
      * @return void
      */
-    public function __construct(\App\Libraries\Notifications $notify)
+    public function __construct(NotificationsInterface $notify)
     {
         $this->notify = $notify;
         parent::__construct();
