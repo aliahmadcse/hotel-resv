@@ -16,7 +16,7 @@ class ShowRoomsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -25,9 +25,9 @@ class ShowRoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, $roomNumber = null)
+    public function __invoke(Request $request, $roomType = null)
     {
-        $rooms = Room::byNumber($roomNumber)->get();
+        $rooms = Room::byRoomType($roomType)->get();
         return view('rooms.index', compact('rooms'));
     }
 }

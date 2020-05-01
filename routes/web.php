@@ -24,7 +24,7 @@ Route::get('/test', function () {
     return "Goodbye";
 });
 
-Route::get('/rooms/{roomNumber?}', 'ShowRoomsController')
+Route::get('/rooms/{roomType?}', 'ShowRoomsController')
     ->name('rooms.index');
 
 // Route::get('/bookings','BookingController@index');

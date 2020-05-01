@@ -12,10 +12,10 @@ class Room extends Model
 
     public $timeStamps = true;
 
-    public function scopeByNumber($query, $roomNumber = null)
+    public function scopeByRoomType($query, $roomType = null)
     {
-        if (!is_null($roomNumber)) {
-            $query->where('number', $roomNumber);
+        if (!is_null($roomType)) {
+            $query->where('room_type_id', $roomType);
         }
         return $query;
     }
