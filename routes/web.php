@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/home', 'BookingController@index');
 
 Route::get('/test', function () {
-    return "Good Bye";
+    return "Goodbye";
 });
 
 Route::get('/rooms/{roomNumber?}', 'ShowRoomsController')
