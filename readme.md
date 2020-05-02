@@ -10,3 +10,4 @@
 2. Run the command `composer install` in terminal to install dependencies
 3. Create an **.env** file with your own settings. A template is provided in **.env.example** file
 4. Now run the app on our local server and enjoy!
+5. 
