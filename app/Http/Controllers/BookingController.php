@@ -106,6 +106,7 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
+        (\App\Jobs\ProcessBookingJob::dispatch($booking));
         $validatedData = $request->validate([
             'room_id' => 'required|exists:rooms,id',
             'user_id' => 'required|exists:users,id',
