@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Booking extends Model
 {
     use SoftDeletes;
+    use Notifiable;
 
-    protected $fillable=[
+    protected $fillable = [
         'room_id',
         'start',
         'end',
@@ -20,13 +22,16 @@ class Booking extends Model
 
     public function room()
     {
-        return $this->belongsTo('App\Room','room_id','id');
+        return $this->belongsTo('App\Room', 'room_id', 'id');
     }
 
     public function users()
     {
-        return $this->belongsToMany('App\User','bookings_users',
-                'booking_id','user_id')->withTimestamps();
-
+        return $this->belongsToMany(
+            'App\User',
+            'bookings_users',
+            'booking_id',
+            'user_id'
+        )->withTimestamps();
     }
 }
