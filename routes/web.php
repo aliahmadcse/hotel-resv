@@ -25,7 +25,7 @@ Route::get('/test', function () {
 });
 
 Route::get('/rooms/{roomType?}', 'ShowRoomsController')
-    ->name('rooms.index');
+    ->name('rooms.index')->where('roomType', '[0-9]+');
 
 // Route::get('/bookings','BookingController@index');
 // Route::get('/bookings/create','BookingController@create');
