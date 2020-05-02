@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Libraries\NotificationsInterface;
 
-class EmailReservationCommand extends Command
+class EmailReservationsCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -74,15 +74,20 @@ class EmailReservationCommand extends Command
         $bar->start();
         foreach ($bookings as $booking) {
             // checking for the passed option
-            if ($this->option('dry-run')) {
-                $this->info('Would process booking');
-            } else {
-                // $this->error("Nothing");
-                $this->notify->send();
-            }
+            $this->processBooking();
             $bar->advance();
         }
         $bar->finish();
         $this->comment("Command Completed");
+    }
+
+    public function processBooking()
+    {
+        if ($this->option('dry-run')) {
+            $this->info('Would process booking');
+        } else {
+            // $this->error("Nothing");
+            $this->notify->send();
+        }
     }
 }

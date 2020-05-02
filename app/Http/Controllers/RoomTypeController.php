@@ -81,6 +81,7 @@ class RoomTypeController extends Controller
         //     'public',
         //     $request->file('picture')
         // );
+
         $roomType->save();
         return redirect()->action('RoomTypeController@index');
     }
