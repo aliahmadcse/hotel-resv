@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test', function () {
     return "Goodbye";
-});
+})->middleware('\App\Http\Middleware\CheckQueryParam');
 
 Route::get('/rooms/{roomType?}', 'ShowRoomsController')
     ->name('rooms.index')->where('roomType', '[0-9]+');
